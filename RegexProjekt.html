@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<head>
+    <title>RegExp</title>
+    <meta charset="utf-8">
+    <style>
+        * {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        body {
+            background-color: bisque;
+            font-size: 20px;
+        }
+
+        input {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+        }
+
+        .verschieben {
+            margin-left: 50px;
+        }
+
+        .greenBackground {
+            background-color: rgb(10, 236, 59)
+        }
+
+        .redBackground {
+            background-color: rgb(238, 130, 42)
+        }
+
+
+        #RegExpListe1,
+        #RegExpDropDownListe1 {
+            width: 500px;
+            font-size: 20px;
+        }
+
+        #slider1 {
+            width: 296px;
+        }
+
+        #divEingabe {
+            background-color: rgb(228, 145, 235);
+            max-width: 802px;
+        }
+
+        textarea {
+            height: 800px;
+            width: 800px;
+            font-size: 15px;
+        }
+
+        #flag1 {
+            width: 30px;
+
+        }
+    </style>
+    <script>
+        'use strict';
+        //Events
+        window.onerror = e => alert('Meine Fehlermeldung!: ' + e);
+
+        document.onkeydown = event => {
+            if (event.key === 'Enter')
+                ausfuehren();
+        }
+        //Zugriffe auf DOM Elemente nur bei geladenem DOM möglich!
+        window.onload = () => {
+            start_button1.onclick = ausfuehren;
+
+            var textareas = document.querySelectorAll('textarea');
+            slider1.oninput = () => {
+                textareas[0].style.fontSize = slider1.value + 'px';
+                textareas[1].style.fontSize = slider1.value + 'px';
+            }
+            speichern_button1.onclick = speichern;
+
+            textarea1.onchange = () => {
+                speichern_button1.classList.remove("greenBackground");
+                speichern_button1.classList.add("redBackground");
+            }
+
+            RegExpDropDownListe1.onchange = function (RegExpDropDownListe1Arg) {
+                RegExpListe1.value = RegExpDropDownListe1.value;
+            }
+
+        }
+        //Abfrage Beispiele:
+        //<(?!(tr|/tr)|(td|/td)|(tbody|/tbody)).*?>
+    </script>
+    <script>
+        function ausfuehren() {
+            var strArr, temp;
+
+            RegExp_Wert_nach_DropDownListe();
+
+            if (RegExpListe1.value)
+                strArr = textarea1.value.match(new RegExp(RegExpListe1.value, flag1.value));
+
+            //Ausgabe:
+            //Undefined mit '' überschreiben
+            temp = '';
+            for (var key in strArr) {
+                if (strArr.hasOwnProperty(key)) {
+                    temp += strArr[key] + '\n';
+                }
+            }
+            textarea2.value = temp;
+        }
+
+        function speichern() {
+            localStorage.text1 = textarea1.value;
+            speichern_button1.classList.remove("redBackground");
+            speichern_button1.classList.add("greenBackground");
+        }
+        function RegExp_Wert_nach_DropDownListe() {
+            //Wenn noch kein children drin ist, sonst gibts Exeption im nächsten if
+            if (RegExpDropDownListe1.children.length > 0) {
+                //Nur Eintragen wenn Werte ungleich
+                if (RegExpDropDownListe1.children[0].value !== RegExpListe1.value) {
+                    insertBefore_DropDownListe();
+                }//Kein else Teil mehr wird somit ausgelassen wenn if(false)
+            } else { insertBefore_DropDownListe(); }
+
+            //Funktion nur das oben nicht doppelter Code nötig!!
+            function insertBefore_DropDownListe() {
+                var option_ = document.createElement('option')
+                option_.textContent = RegExpListe1.value;
+                RegExpDropDownListe1.insertBefore(option_, RegExpDropDownListe1.children[0]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="divEingabe">
+        <input type="button" id="start_button1" class="greenBackground" value="Start">
+        <span class="verschieben">RegExp:</span>
+        <select id="RegExpDropDownListe1" style="width: 20px; margin-right: 0px;"></select>
+        <input type="text" id="RegExpListe1" value="<a href=.+?>" style="margin-left: 0px;">
+        <br>&nbsp;Flags:
+        <input type="text" id="flag1" value="g">
+        <input type="button" id="speichern_button1" class="greenBackground" value="Speichern">
+        <span class="verschieben">Schriftgrösse:</span>
+        <input type="range" id="slider1" min="1" max="100" value="15">
+    </div>
+
+    <textarea wrap="off" id="textarea1"></textarea>
+    <textarea wrap="off" id="textarea2"></textarea>
+    <script>
+        if (localStorage.text1) {
+            textarea1.value = localStorage.text1;
+        }
+    </script>
+</body>
+
+</html>
