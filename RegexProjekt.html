@@ -59,79 +59,85 @@
         }
     </style>
     <script>
-        'use strict';
-        //Events
-        window.onerror = e => alert('Meine Fehlermeldung!: ' + e);
 
-        document.onkeydown = event => {
-            if (event.key === 'Enter')
-                ausfuehren();
-        }
-        //Zugriffe auf DOM Elemente nur bei geladenem DOM möglich!
-        window.onload = () => {
-            start_button1.onclick = ausfuehren;
+        (function () {
+            'use strict';
+            //Events
+            window.addEventListener('error', function (e) { alert('Meine Fehlermeldung!: ' + e); }, false);
+            window.addEventListener('load', on_load, false);
 
-            var textareas = document.querySelectorAll('textarea');
-            slider1.oninput = () => {
-                textareas[0].style.fontSize = slider1.value + 'px';
-                textareas[1].style.fontSize = slider1.value + 'px';
-            }
-            speichern_button1.onclick = speichern;
 
-            textarea1.onchange = () => {
-                speichern_button1.classList.remove("greenBackground");
-                speichern_button1.classList.add("redBackground");
-            }
+            function on_load() {
 
-            RegExpDropDownListe1.onchange = function (RegExpDropDownListe1Arg) {
-                RegExpListe1.value = RegExpDropDownListe1.value;
-            }
+                //Events
+                window.addEventListener('keydown', on_keydown, false);
+                slider1.addEventListener('oninput', on_oninput, false);
+                start_button1.addEventListener('click', ausfuehren, false);
+                textarea1.addEventListener('change', on_change, false);
+                speichern_button1.addEventListener('click', speichern, false);
+                RegExpDropDownListe1.addEventListener('change', on_changeRegExp, false);
 
-        }
-        //Abfrage Beispiele:
-        //<(?!(tr|/tr)|(td|/td)|(tbody|/tbody)).*?>
-    </script>
-    <script>
-        function ausfuehren() {
-            var strArr, temp;
 
-            RegExp_Wert_nach_DropDownListe();
+                function on_oninput() {
+                    textareas1.style.fontSize = slider1.value + 'px';
+                    textareas2.style.fontSize = slider1.value + 'px';
+                }
+                function on_change() {
+                    speichern_button1.classList.remove("greenBackground");
+                    speichern_button1.classList.add("redBackground");
+                }
+                function on_changeRegExp(RegExpDropDownListe1Arg) {
+                    RegExpListe1.value = RegExpDropDownListe1.value;
+                }
+                function on_keydown() {
+                    if (event.key === 'Enter')
+                        ausfuehren();
+                }
+                function ausfuehren() {
+                    var strArr, temp;
 
-            if (RegExpListe1.value)
-                strArr = textarea1.value.match(new RegExp(RegExpListe1.value, flag1.value));
+                    RegExp_Wert_nach_DropDownListe();
 
-            //Ausgabe:
-            //Undefined mit '' überschreiben
-            temp = '';
-            for (var key in strArr) {
-                if (strArr.hasOwnProperty(key)) {
-                    temp += strArr[key] + '\n';
+                    if (RegExpListe1.value)
+                        strArr = textarea1.value.match(new RegExp(RegExpListe1.value, flag1.value));
+
+                    //Ausgabe:
+                    //Undefined mit '' überschreiben
+                    temp = '';
+                    for (var key in strArr) {
+                        if (strArr.hasOwnProperty(key)) {
+                            temp += strArr[key] + '\n';
+                        }
+                    }
+                    textarea2.value = temp;
+                }
+                function speichern() {
+                    localStorage.text1 = textarea1.value;
+                    speichern_button1.classList.remove("redBackground");
+                    speichern_button1.classList.add("greenBackground");
+                }
+                function RegExp_Wert_nach_DropDownListe() {
+                    //Wenn noch kein children drin ist, sonst gibts Exeption im nächsten if
+                    if (RegExpDropDownListe1.children.length > 0) {
+                        //Nur Eintragen wenn Werte ungleich
+                        if (RegExpDropDownListe1.children[0].value !== RegExpListe1.value) {
+                            insertBefore_DropDownListe();
+                        }//Kein else Teil mehr wird somit ausgelassen wenn if(false)
+                    } else {
+                        insertBefore_DropDownListe();
+                    }
+
+                }
+                function insertBefore_DropDownListe() {
+                    var option_ = document.createElement('option')
+                    option_.textContent = RegExpListe1.value;
+                    RegExpDropDownListe1.insertBefore(option_, RegExpDropDownListe1.children[0]);
                 }
             }
-            textarea2.value = temp;
-        }
+        })();
 
-        function speichern() {
-            localStorage.text1 = textarea1.value;
-            speichern_button1.classList.remove("redBackground");
-            speichern_button1.classList.add("greenBackground");
-        }
-        function RegExp_Wert_nach_DropDownListe() {
-            //Wenn noch kein children drin ist, sonst gibts Exeption im nächsten if
-            if (RegExpDropDownListe1.children.length > 0) {
-                //Nur Eintragen wenn Werte ungleich
-                if (RegExpDropDownListe1.children[0].value !== RegExpListe1.value) {
-                    insertBefore_DropDownListe();
-                }//Kein else Teil mehr wird somit ausgelassen wenn if(false)
-            } else { insertBefore_DropDownListe(); }
-
-            //Funktion nur das oben nicht doppelter Code nötig!!
-            function insertBefore_DropDownListe() {
-                var option_ = document.createElement('option')
-                option_.textContent = RegExpListe1.value;
-                RegExpDropDownListe1.insertBefore(option_, RegExpDropDownListe1.children[0]);
-            }
-        }
+            //Abfrage Beispiele:
+            //<(?!(tr|/tr)|(td|/td)|(tbody|/tbody)).*?>
     </script>
 </head>
 
