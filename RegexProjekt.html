@@ -63,7 +63,7 @@
         (function () {
             'use strict';
             //Events
-            window.addEventListener('error', function (e) { alert('Meine Fehlermeldung!: ' + e); }, false);
+            window.addEventListener('error', function (e) { alert('Meine Fehlermeldung!: ' + e.message); }, false);
             window.addEventListener('load', on_load, false);
 
             function on_load() {
@@ -81,7 +81,8 @@
                     textareas1.style.fontSize = slider1.value + 'px';
                     textareas2.style.fontSize = slider1.value + 'px';
                 }
-                function on_input() {
+                function on_input(e) {
+                    //e.preventDefault();
                     speichern_button1.classList.remove("greenBackground");
                     speichern_button1.classList.add("redBackground");
                 }
@@ -111,7 +112,8 @@
                     textarea2.value = temp;
                 }
                 function speichern() {
-                    localStorage.text1 = textarea1.value;
+                    if (window.localStorage)
+                        localStorage.text1 = textarea1.value;
                     speichern_button1.classList.remove("redBackground");
                     speichern_button1.classList.add("greenBackground");
                 }
@@ -155,11 +157,6 @@
 
     <textarea wrap="off" id="textarea1"></textarea>
     <textarea wrap="off" id="textarea2"></textarea>
-    <script>
-        if (localStorage.text1) {
-            textarea1.value = localStorage.text1;
-        }
-    </script>
 </body>
 
 </html>
