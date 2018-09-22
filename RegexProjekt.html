@@ -66,14 +66,13 @@
             window.addEventListener('error', function (e) { alert('Meine Fehlermeldung!: ' + e); }, false);
             window.addEventListener('load', on_load, false);
 
-
             function on_load() {
 
                 //Events
                 window.addEventListener('keydown', on_keydown, false);
                 slider1.addEventListener('oninput', on_oninput, false);
                 start_button1.addEventListener('click', ausfuehren, false);
-                textarea1.addEventListener('change', on_change, false);
+                textarea1.addEventListener('input', on_input, false);
                 speichern_button1.addEventListener('click', speichern, false);
                 RegExpDropDownListe1.addEventListener('change', on_changeRegExp, false);
 
@@ -82,14 +81,14 @@
                     textareas1.style.fontSize = slider1.value + 'px';
                     textareas2.style.fontSize = slider1.value + 'px';
                 }
-                function on_change() {
+                function on_input() {
                     speichern_button1.classList.remove("greenBackground");
                     speichern_button1.classList.add("redBackground");
                 }
                 function on_changeRegExp(RegExpDropDownListe1Arg) {
                     RegExpListe1.value = RegExpDropDownListe1.value;
                 }
-                function on_keydown() {
+                function on_keydown(event) {
                     if (event.key === 'Enter')
                         ausfuehren();
                 }
