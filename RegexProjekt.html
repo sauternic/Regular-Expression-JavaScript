@@ -94,9 +94,13 @@
                         }
                     }
                 }
-                function on_keydown(event) {
-                    if (event.key === 'Enter')
+                function on_keydown(e) {
+                    if (e.key === 'Enter')
                         ausfuehren();
+                    if (e.keyCode === 38)
+                        document.execCommand('redo', false, null);
+                    if (e.keyCode === 40)
+                        document.execCommand('undo', false, null);
                 }
                 function ausfuehren() {
                     var strArr, temp;
@@ -136,7 +140,7 @@
         <input type="text" id="RegExpListe1" value="<a href=.+?>" style="margin-left: 0px;">
         <br>&nbsp;Flags:
         <input type="text" id="flag1" value="g">
-        <input type="button" id="speichern_button1" class="greenBackground" value="Speichern">
+        <input type="button" id="speichern_button1" class="greenBackground" value="Text save">
         <span class="verschieben">Schriftgrösse:</span>
         <input type="range" id="slider1" min="1" max="100" value="15">
     </div>
