@@ -115,6 +115,10 @@
                         on_input_S();
                     }
                 }
+                
+                //IE null Problem beheben(wird in Textarea angezeigt)
+                if (textarea1.value === null)
+                    textarea1.value = '';
 
                 function on_input_S() {
                     textarea1.style.fontSize = slider1.value + 'px';
