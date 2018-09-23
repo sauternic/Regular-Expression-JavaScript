@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 
 <head>
-    <title>RegExp</title>
+    <title>Regular Expression</title>
+
+    <!--Version 1.0 Author: Nicolas Sauter on Github: (sauternic)-->
+
     <meta charset="utf-8">
+    <meta name="description" content="Suchen mit regulären Ausdrücken">
+    <meta name="keywords" content="regular-expression,reguläre-ausdrücke,regexp,regexpression,suchen,filtern,filter,javascript,html">
+
     <style>
         * {
             margin: 5px;
@@ -76,17 +82,36 @@
                 textarea1.addEventListener('input', on_input, false);
                 speichern_button1.addEventListener('click', speichern, false);
 
+                
+                
+                //*****Drag and Drop vom PC in das Browser-Textfeld*********************************************
+                
+                //Standard Verhalten Unterbinden weil sonst -> (öffnet eine neue Seite mit dem Text)!
+                document.addEventListener('drop', function (e) { e.preventDefault(); }, false);
+                //Drag and Drop Einrichten
+                textarea1.addEventListener('drop', on_drop, false);
+
+                function on_drop(e) {
+                    var fReader = new FileReader();
+                    
+                    fReader.readAsText(e.dataTransfer.files[0]);
+                    fReader.onload = function () {
+                        textarea1.value = fReader.result;
+                    }
+                }
+                //**********************************************************************************************
+                
+                
                 if (window.localStorage) {
                     textarea1.value = localStorage.getItem('text1');
                     if (localStorage.RegExpListe1 != undefined)
                         RegExpListe1.value = localStorage.getItem('RegExpListe1');
                     if (localStorage.flag1 != undefined)
                         flag1.value = localStorage.getItem('flag1');
-                    if (localStorage.slider1 != undefined){
+                    if (localStorage.slider1 != undefined) {
                         slider1.value = localStorage.getItem('slider1');
                         on_input_S();
                     }
-                
                 }
 
                 function on_input_S() {
@@ -151,7 +176,7 @@
     <div id="divEingabe">
         <input type="button" id="start_button1" class="greenBackground" value="Matching">
         <span class="verschieben">RegExp:</span>
-        <input type="text" id="RegExpListe1" value="<a href=.+?>" style="margin-left: 0px;">
+        <input type="text" id="RegExpListe1" placeholder="Example: <a href=.+?>" style="margin-left: 0px;">
         <br>&nbsp;Flags:
         <input type="text" id="flag1" value="g">
         <input type="button" id="speichern_button1" class="greenBackground" value="Text save">
@@ -159,8 +184,8 @@
         <input type="range" id="slider1" min="1" max="100" value="15">
     </div>
 
-    <textarea wrap="off" id="textarea1"></textarea>
-    <textarea wrap="off" id="textarea2"></textarea>
+    <textarea wrap="off" id="textarea1" placeholder="paste from clipboard (ctrl + v) or write directly"></textarea>
+    <textarea wrap="off" id="textarea2" placeholder="copy for using('ctrl + a' and 'ctrl + c') to clipboard"></textarea>
 </body>
 
 </html>
