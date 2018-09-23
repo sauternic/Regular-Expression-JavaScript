@@ -75,7 +75,6 @@
                 start_button1.addEventListener('click', ausfuehren, false);
                 textarea1.addEventListener('input', on_input, false);
                 speichern_button1.addEventListener('click', speichern, false);
-                RegExpDropDownListe1.addEventListener('change', on_changeRegExp, false);
 
                 if (window.localStorage)
                     textarea1.value = window.localStorage.getItem('text1');
@@ -95,17 +94,12 @@
                         }
                     }
                 }
-                function on_changeRegExp(RegExpDropDownListe1Arg) {
-                    RegExpListe1.value = RegExpDropDownListe1.value;
-                }
                 function on_keydown(event) {
                     if (event.key === 'Enter')
                         ausfuehren();
                 }
                 function ausfuehren() {
                     var strArr, temp;
-
-                    RegExp_Wert_nach_DropDownListe();
 
                     if (RegExpListe1.value)
                         strArr = textarea1.value.match(new RegExp(RegExpListe1.value, flag1.value));
@@ -127,22 +121,6 @@
                         speichern_button1.classList.add("greenBackground");
                     }
                 }
-                function RegExp_Wert_nach_DropDownListe() {
-                    //Wenn noch kein children drin ist, sonst gibts Exeption im nächsten if
-                    if (RegExpDropDownListe1.children.length > 0) {
-                        //Nur Eintragen wenn Werte ungleich
-                        if (RegExpDropDownListe1.children[0].value !== RegExpListe1.value) {
-                            insertBefore_DropDownListe();
-                        }//Kein else Teil mehr wird somit ausgelassen wenn if(false)
-                    } else {
-                        insertBefore_DropDownListe();
-                    }
-                }
-                function insertBefore_DropDownListe() {
-                    var option_ = document.createElement('option')
-                    option_.textContent = RegExpListe1.value;
-                    RegExpDropDownListe1.insertBefore(option_, RegExpDropDownListe1.children[0]);
-                }
             }
         })();
 
@@ -153,9 +131,8 @@
 
 <body>
     <div id="divEingabe">
-        <input type="button" id="start_button1" class="greenBackground" value="Start">
+        <input type="button" id="start_button1" class="greenBackground" value="Matching">
         <span class="verschieben">RegExp:</span>
-        <select id="RegExpDropDownListe1" style="width: 20px; margin-right: 0px;"></select>
         <input type="text" id="RegExpListe1" value="<a href=.+?>" style="margin-left: 0px;">
         <br>&nbsp;Flags:
         <input type="text" id="flag1" value="g">
