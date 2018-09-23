@@ -70,21 +70,30 @@
 
                 //Events
                 window.addEventListener('keydown', on_keydown, false);
-                slider1.addEventListener('oninput', on_oninput, false);
+                slider1.addEventListener('input', on_input_S, false);
+                slider1.addEventListener('change', on_input_S, false);
                 start_button1.addEventListener('click', ausfuehren, false);
                 textarea1.addEventListener('input', on_input, false);
                 speichern_button1.addEventListener('click', speichern, false);
                 RegExpDropDownListe1.addEventListener('change', on_changeRegExp, false);
 
+                if (window.localStorage)
+                    textarea1.value = window.localStorage.getItem('text1');
 
-                function on_oninput() {
-                    textareas1.style.fontSize = slider1.value + 'px';
-                    textareas2.style.fontSize = slider1.value + 'px';
+                function on_input_S() {
+                    textarea1.style.fontSize = slider1.value + 'px';
+                    textarea2.style.fontSize = slider1.value + 'px';
                 }
                 function on_input(e) {
-                    //e.preventDefault();
-                    speichern_button1.classList.remove("greenBackground");
-                    speichern_button1.classList.add("redBackground");
+                    if (window.localStorage) {
+                        if (textarea1.value === window.localStorage.getItem('text1')) {
+                            speichern_button1.classList.remove("redBackground");
+                            speichern_button1.classList.add("greenBackground");
+                        } else {
+                            speichern_button1.classList.remove("greenBackground");
+                            speichern_button1.classList.add("redBackground");
+                        }
+                    }
                 }
                 function on_changeRegExp(RegExpDropDownListe1Arg) {
                     RegExpListe1.value = RegExpDropDownListe1.value;
@@ -112,10 +121,11 @@
                     textarea2.value = temp;
                 }
                 function speichern() {
-                    if (window.localStorage)
-                        localStorage.text1 = textarea1.value;
-                    speichern_button1.classList.remove("redBackground");
-                    speichern_button1.classList.add("greenBackground");
+                    if (window.localStorage) {
+                        localStorage.setItem('text1', textarea1.value);
+                        speichern_button1.classList.remove("redBackground");
+                        speichern_button1.classList.add("greenBackground");
+                    }
                 }
                 function RegExp_Wert_nach_DropDownListe() {
                     //Wenn noch kein children drin ist, sonst gibts Exeption im nächsten if
@@ -127,7 +137,6 @@
                     } else {
                         insertBefore_DropDownListe();
                     }
-
                 }
                 function insertBefore_DropDownListe() {
                     var option_ = document.createElement('option')
