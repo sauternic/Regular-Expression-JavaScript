@@ -2,7 +2,7 @@
 
 # [Show](https://sauternic.github.io/Regular-Expression-V1.1/)
 
-Search text with regular-expression
+Search text with regular-expression.
 Each match is listed in the text box.
 
 Incidentally, you can also use the text-box as a text-correction.
@@ -27,3 +27,4 @@ Wo rot unterstrichen, mit rechter Maus drauf klicken und ein Wort wählen.
 - Opera
 - Android Smartphone Chrom und Samsung-Browser
 - Ipad
+
