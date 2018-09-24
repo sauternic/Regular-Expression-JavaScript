@@ -17,3 +17,13 @@ Jeder Treffer wird im Textfeld aufgeführt.
 Nebenbei kann man das Textfeld auch als Textkorrektur benutzen.
 Das ist nicht von mir, das bittet jeder Browser als Grundeinstellung an.
 Wo rot unterstrichen, mit rechter Maus drauf klicken und ein Wort wählen.
+
+### Läuft getestet auf:
+
+- Firefox
+- Chrom
+- IE
+- Edge
+- Opera
+- Android Smartphone Chrom und Samsung-Browser
+- Ipad
