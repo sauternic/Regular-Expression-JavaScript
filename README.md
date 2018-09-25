@@ -1,6 +1,6 @@
-# Regular-Expression-V1.1
+# Regular-Expression-JavaScript
 
-# [Show](https://sauternic.github.io/Regular-Expression-V1.1/)
+# [Show](https://sauternic.github.io/Regular-Expression-JavaScript/)
 
 Search text with regular-expression.
 Each match is listed in the text box.
