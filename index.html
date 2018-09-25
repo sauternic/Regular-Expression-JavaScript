@@ -4,14 +4,14 @@
     <title>Regular Expression V1.1</title>
 
     <!--Version 1.1 Author: Nicolas Sauter on Github: (sauternic)-->
-    
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125935075-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-        
+
         gtag('config', 'UA-125935075-1', { 'anonymize_ip': true });
     </script>
 
@@ -36,7 +36,7 @@
         }
 
         .verschieben {
-            margin-left: 60px;
+            margin-left: 40px;
         }
 
         .greenBackground {
@@ -47,8 +47,7 @@
             background-color: rgb(238, 130, 42)
         }
 
-        #RegExpListe1,
-        #RegExpDropDownListe1 {
+        #RegExpListe1 {
             width: 500px;
             font-size: 20px;
         }
@@ -125,7 +124,7 @@
                         on_input_S();
                     }
                 }
-                
+
                 //IE null Problem beheben(wird in Textarea angezeigt)
                 if (textarea1.value === 'null')
                     textarea1.value = '';
@@ -211,7 +210,7 @@
         <span class="verschieben">File:</span>
         <input type="file" id="file1" name="File">
         <br>
-        <span class="verschieben" style="vertical-align : 10px">Font-Size:</span>
+        <span style="margin-left: 60px; vertical-align : 10px">Font-Size:</span>
         <input type="range" id="slider1" min="1" max="100" value="15">
     </div>
 
